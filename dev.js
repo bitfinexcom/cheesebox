@@ -59,13 +59,13 @@ function browserifyLibs (cb) {
 }
 
 function jsx (cb) {
-  const src = path.join(__dirname, 'jsx', 'app.jsx')
-  const target = fs.createWriteStream(path.join(__dirname, 'jsx', 'app.js'))
+  const src = path.join(__dirname, 'src', 'app.jsx')
+  const target = fs.createWriteStream(path.join(__dirname, 'build', 'app.js'))
   browserify(src)
     .transform('babelify', {
       presets: [
         '@babel/preset-env',
-        [ '@babel/preset-react', { pragma: 'h' } ]
+        [ '@babel/preset-react', {} ]
       ]
     })
     .bundle()

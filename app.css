@@ -2,11 +2,47 @@ body {
   margin-top: 25px;
 }
 
+.submit__button {
+  float: right;
+}
+
+.submit__postonly {
+  margin-right: 5px;
+}
+
+.submit__checkbox__ordertype {
+  margin-left: 5px;
+}
+
+.submit__checkbox__buy {
+  margin-right: 20px; display: inline;'
+}
+
+.submit__checkbox__sell {
+  display: inline;
+}
+
+.app__middlescreen {
+  margin-top: 3rem;
+}
+
 .orderbook__internal {
   margin-top: 50px;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+}
+
+.orderbook__title-wrap {
+  text-align: center;
+}
+
+.row__cancelbutton__el-red {
+  color:rgba(200, 40, 40, 0.6);
+}
+
+.row__cancelbutton__el-pointer {
+  cursor: pointer;
 }
 
 .orderbook__side {
