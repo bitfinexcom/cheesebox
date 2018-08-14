@@ -20,46 +20,11 @@ async.series(tasks, (err) => {
 })
 
 function browserifyLibs (cb) {
-  const tasks = [
-    (cb) => {
-      mkdirp.sync(path.join(__dirname, 'deps'))
-      cb(null)
-    },
-    (cb) => {
-      const eosLib = path.join(__dirname, 'deps', 'eosjs-dist.js')
-      if (fs.existsSync(eosLib)) {
-        return cb(null)
-      }
-
-      browserify(require.resolve('eosjs'), { standalone: 'Eos' })
-        .bundle()
-        .pipe(fs.createWriteStream(eosLib))
-        .on('finish', cb)
-    },
-
-    (cb) => {
-      const src = path.join(__dirname, '..', '..', 'index.js')
-      const target = fs.createWriteStream(path.join(__dirname, 'deps', 'sunbeam-dist.js'))
-      browserify(src)
-        .transform('babelify', {
-          presets: [ '@babel/preset-env' ]
-        })
-        .bundle()
-        .pipe(target)
-        .on('finish', () => {
-          cb(null)
-        })
-    }
-  ]
-
-  async.parallel(tasks, (err) => {
-    if (err) throw err
-    cb(null)
-  })
+  cb(null)
 }
 
 function jsx (cb) {
-  const src = path.join(__dirname, 'src', 'app.jsx')
+  const src = path.join(__dirname, 'src', 'app-hive.jsx')
   const target = fs.createWriteStream(path.join(__dirname, 'build', 'app.js'))
   browserify(src)
     .transform('babelify', {

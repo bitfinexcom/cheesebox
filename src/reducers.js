@@ -7,7 +7,6 @@ import {
   ORDERBOOK
 } from './actions.js'
 
-
 function pairPairs (state = { pairs: [], pair: '' }, action) {
   const { type, payload } = action
 
@@ -28,7 +27,7 @@ function pairPairs (state = { pairs: [], pair: '' }, action) {
   }
 }
 
-function positions (state = { bidsPositions: [], asksPositions: [], errorPositions: null, }, action) {
+function positions (state = { bidsPositions: [], asksPositions: [], errorPositions: null }, action) {
   const { type, payload } = action
 
   switch (type) {
@@ -48,7 +47,7 @@ function positions (state = { bidsPositions: [], asksPositions: [], errorPositio
   }
 }
 
-function orderbook (state = { asks: [], bids: [], errorOb: null, }, action) {
+function orderbook (state = { asks: [], bids: [], errorOb: null }, action) {
   const { type, payload } = action
 
   switch (type) {

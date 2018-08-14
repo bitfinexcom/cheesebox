@@ -58,7 +58,7 @@ class PositionsContainer extends Component {
     const {
       bidsPositions = [],
       asksPositions = [],
-      errorPositions =  null,
+      errorPositions = null,
       pair = ''
     } = this.props
 
@@ -68,8 +68,8 @@ class PositionsContainer extends Component {
         bids={bidsPositions}
         asks={asksPositions}
         error={errorPositions}
-        cancelcb={(id, side) => {
-          this.cancelOrder(id, symbol, s)
+        cancelcb={(data) => {
+          this.cancelOrder(data)
         }}
       />
     )
@@ -107,14 +107,14 @@ class PositionsInternal extends Component {
         <div className='positions__bids'>
           {
             bids.map((bidRow, i) => {
-              return <OrderbookRow key={i} data={bidRow} cancelcb={cancelcb} side='bids' />
+              return <OrderbookRow key={i} data={bidRow} cancelcb={cancelcb} pair={pair} side='bids' />
             })
           }
         </div>
         <div className='positions__asks'>
           {
             asks.map((askRow, i) => {
-              return <OrderbookRow key={i} data={askRow} cancelcb={cancelcb} side='asks' />
+              return <OrderbookRow key={i} data={askRow} cancelcb={cancelcb} pair={pair} side='asks' />
             })
           }
         </div>
@@ -129,7 +129,6 @@ function mapStateToProps (state) {
     user,
     positions
   } = state
-
 
   return {
     ...pairPairs,

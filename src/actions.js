@@ -5,7 +5,6 @@ export const LOGIN = 'LOGIN'
 export const POSITIONS = 'POSITIONS'
 export const ORDERBOOK = 'ORDERBOOK'
 
-
 export function setPairPairs (payload) {
   return {
     type: PAIR_PAIRS,

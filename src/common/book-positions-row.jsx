@@ -13,7 +13,8 @@ const Row = (props) => {
     },
     cancelcb, // false for order book, function for positions
     side,
-    data
+    data,
+    pair
   } = props
 
   // display either a small circle to indicate that the order belongs to the user
@@ -29,7 +30,7 @@ const Row = (props) => {
 
   if (cancelcb && belongsToUser) {
     lastElement = (
-      <div className='row__cancelbutton row__cancelbutton__el-pointer' onClick={(e) => cancelcb(data)}>
+      <div className='row__cancelbutton row__cancelbutton__el-pointer' onClick={(e) => cancelcb({ ...data, side, pair })}>
         <div className='row__cancelbutton__el'>X</div>
       </div>
     )
