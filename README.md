@@ -12,7 +12,7 @@ If you created an own exchange / connector, feel free to submit a [Pull Request]
 ```
 # eosfinex
 
-nodemon -e js,jsx dev-eos.js -w src
+nodemon -e js,jsx dev-eosfinex.js -w src
 
 # hive
 
