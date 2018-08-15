@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const browserify = require('browserify')
 const async = require('async')
+const mkdirp = require('mkdirp')
 
 const tasks = [
   copy,
@@ -18,6 +19,8 @@ async.series(tasks, (err) => {
 })
 
 function jsx (cb) {
+  mkdirp.sync(path.join(__dirname, 'build'))
+
   const src = path.join(__dirname, 'src', 'app-eosfinex.jsx')
   const target = fs.createWriteStream(path.join(__dirname, 'build', 'app.js'))
   browserify([ require.resolve('eosjs'), require.resolve('sunbeam'), src ])
@@ -39,6 +42,8 @@ function copy (cb) {
     if (fs.existsSync(t)) {
       return cb(null)
     }
+
+    mkdirp.sync(path.join(__dirname, 'deps'))
 
     const target = fs.createWriteStream(t)
     fs.createReadStream(require.resolve(name))
