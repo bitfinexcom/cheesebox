@@ -26,7 +26,6 @@ class WalletContainer extends Component {
     this.periodicFetch = setInterval(() => {
       this.client.wallet()
         .then((res) => {
-          console.log('wallet', 'setWallet', res)
           dispatch(setWallet(res))
         })
         .catch((err) => {
