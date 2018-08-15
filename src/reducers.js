@@ -4,7 +4,8 @@ import {
   PAIR_PAIRS,
   LOGIN,
   POSITIONS,
-  ORDERBOOK
+  ORDERBOOK,
+  WALLET
 } from './actions.js'
 
 function pairPairs (state = { pairs: [], pair: '' }, action) {
@@ -67,7 +68,7 @@ function orderbook (state = { asks: [], bids: [], errorOb: null }, action) {
   }
 }
 
-function user (state = { user: { name: '', id: '' }}, action) {
+function user (state = { user: { name: '', id: '' } }, action) {
   const { type, payload } = action
 
   const data = payload
@@ -85,11 +86,29 @@ function user (state = { user: { name: '', id: '' }}, action) {
   }
 }
 
+function wallet (state = { wallet: [] }, action) {
+  const { type, payload } = action
+
+  const data = payload
+
+  switch (type) {
+    case WALLET:
+
+      return {
+        ...state,
+        wallet: data
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   pairPairs,
   user,
   positions,
-  orderbook
+  orderbook,
+  wallet
 })
 
 export default rootReducer

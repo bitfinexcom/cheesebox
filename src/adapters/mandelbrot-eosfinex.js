@@ -137,6 +137,24 @@ class MandelbrotEosfinex extends MB {
 
     return this.sb.createOrder(data)
   }
+
+  wallet () {
+    return new Promise((resolve, reject) => {
+      this.sb.balance((err, data) => {
+        if (err) return reject(err)
+
+        const res = data.map((el) => {
+          const tmp = el.split(' ')
+          return {
+            currency: tmp[1],
+            balance: tmp[0]
+          }
+        })
+
+        resolve(res)
+      })
+    })
+  }
 }
 
 module.exports = MandelbrotEosfinex

@@ -24,6 +24,8 @@ function browserifyLibs (cb) {
 }
 
 function jsx (cb) {
+  mkdirp.sync(path.join(__dirname, 'build'))
+
   const src = path.join(__dirname, 'src', 'app-hive.jsx')
   const target = fs.createWriteStream(path.join(__dirname, 'build', 'app.js'))
   browserify(src)
@@ -45,6 +47,8 @@ function copy (cb) {
     if (fs.existsSync(t)) {
       return cb(null)
     }
+
+    mkdirp.sync(path.join(__dirname, 'deps'))
 
     const target = fs.createWriteStream(t)
     fs.createReadStream(require.resolve(name))
