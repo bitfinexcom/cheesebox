@@ -123,17 +123,27 @@ class MandelbrotHive extends MB {
   }
 
   cancel (q) {
-    const data = { v_pair: q.pair , id: q.id }
+    const data = { v_pair: q.pair, id: q.id }
 
     return this.send(['cancel_order', data])
   }
 
   wallet (q, opts = {}) {
-    const { id } = q
+    const { id } = this.conf.user
 
     return this.send(['get_wallet', [id, 'exchange']])
-      .then((res) => {
-        console.log(res)
+      .then((data) => {
+        const balances = data[0]
+
+        const res = Object.keys(balances).map((k) => {
+          const el = balances[k]
+          return {
+            currency: el.currency,
+            balance: el.balance
+          }
+        })
+
+        return res
       })
   }
 
