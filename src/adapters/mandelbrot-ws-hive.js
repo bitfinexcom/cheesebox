@@ -4,16 +4,21 @@ const MB = require('./mandelbrot-ws-base.js')
 const WebSocket = require('isomorphic-ws')
 
 class MandelbrotHive extends MB {
-  constructor (conf = {}) {
-    super(conf)
+  constructor (opts = {
+    transform: false,
+    url: null
+  }) {
+    super(opts)
 
-    this.conf = conf
+    this.conf = opts
+    this.url = opts.url
 
-    this.wsServer = conf.wsServer
+    this.channels = {}
+    this.bookHandlers = {}
   }
 
   open () {
-    const ws = this.ws = new WebSocket(this.wsServer, {})
+    const ws = this.ws = new WebSocket(this.url, {})
 
     ws.onerror = (err) => {
       this.emit('error', err)
@@ -40,11 +45,76 @@ class MandelbrotHive extends MB {
   }
 
   send (msg) {
-    this.ws.send(JSON.stringify(msg))
+    const str = JSON.stringify(msg)
+    this.ws.send(str)
   }
 
-  handleMessage () {
+  subscribeOrderBook (symbol) {
+    return this.subscribe('book', { symbol })
+  }
 
+  subscribe (channel, opts) {
+    const msg = {
+      event: 'subscribe',
+      channel: channel
+    }
+
+    this.send(Object.assign(msg, opts))
+  }
+
+  handleMessage (m) {
+    let msg
+
+    try {
+      msg = JSON.parse(m.data)
+    } catch (e) {
+      this.emit('error', 'invalid message:', m)
+      return
+    }
+
+    if (msg.event) {
+      this.handleEventMessage(msg)
+      return
+    }
+
+    if (Array.isArray(msg)) {
+      this.handleOrderbookMessage(msg)
+    }
+  }
+
+  handleEventMessage (msg) {
+    const { channel, event, chanId } = msg
+
+    if (event === 'subscribed') {
+      if (!this.channels[channel]) {
+        this.channels[channel] = {}
+      }
+
+      this.channels[channel][chanId] = msg
+    }
+  }
+
+  handleOrderbookMessage (msg) {
+    const [ chanId ] = msg
+    const { symbol } = this.channels['book'][chanId]
+    const handler = this.bookHandlers[symbol]
+
+    if (msg && msg[1] === 'os') {
+      // snapshot
+      handler(msg[2])
+      return
+    }
+
+    handler(msg[1])
+  }
+
+  onOrderBook (filter, handler) {
+    const { symbol } = filter
+
+    if (!symbol) throw new Error('missing: filter.symbol')
+    if (this.bookHandlers[symbol]) throw new Error('handler already registered')
+
+    this.bookHandlers[symbol] = handler
   }
 }
 

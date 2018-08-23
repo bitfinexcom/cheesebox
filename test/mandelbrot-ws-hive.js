@@ -19,8 +19,6 @@ describe('websockets', () => {
     })
 
     wss.messageHook = (ws, msg) => {
-      msg = JSON.parse(msg)
-
       assert.equal(msg.event, 'subscribe')
       wss.send(ws, {ok: true})
     }
@@ -29,15 +27,15 @@ describe('websockets', () => {
       wss.close()
     }
 
-    const conf = { wsServer: 'ws://localhost:8888' }
+    const conf = { url: 'ws://localhost:8888' }
     const ws = new MWsHive(conf)
 
     ws.on('open', () => {
-      const msg = JSON.stringify({
+      const msg = {
         event: 'subscribe',
         channel: 'book',
         symbol: 'BTCUSD'
-      })
+      }
 
       ws.send(msg)
     })
