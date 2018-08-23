@@ -15,10 +15,12 @@
     "debug": "^3.1.0",
     "eosjs": "^16.0.2",
     "express": "^4.16.3",
+    "isomorphic-ws": "^4.0.1",
     "linkstate": "^1.1.1",
     "lodash": "^4.17.10",
     "milligram": "^1.3.0",
     "mkdirp": "^0.5.1",
+    "mocha": "^5.2.0",
     "normalize.css": "^8.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
@@ -26,7 +28,8 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "standard": "^11.0.1",
-    "sunbeam": "git+https://github.com/bitfinexcom/sunbeam.git"
+    "sunbeam": "git+https://github.com/bitfinexcom/sunbeam.git",
+    "ws": "^6.0.0"
   },
   "scripts": {
     "test": "standard"
