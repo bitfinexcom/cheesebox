@@ -21,12 +21,12 @@ async.series(tasks, (err) => {
 function jsx (cb) {
   mkdirp.sync(path.join(__dirname, 'build'))
 
-  const src = path.join(__dirname, 'src', 'app-eosfinex.jsx')
+  const src = path.join(__dirname, 'src', 'app-eosfinex-ws.jsx')
   const target = fs.createWriteStream(path.join(__dirname, 'build', 'app.js'))
   browserify([ require.resolve('eosjs'), require.resolve('sunbeam'), src ])
     .transform('babelify', {
       presets: [
-        '@babel/preset-env',
+        ['@babel/preset-env', { "targets": { "browsers": ["last 2 Chrome versions"] } } ],
         [ '@babel/preset-react', {} ]
       ]
     })

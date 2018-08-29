@@ -20,6 +20,8 @@ class MandelbrotEosfinex extends MB {
 
     this.sb = conf.sunbeam
     this.user = conf.user
+
+    this.subscriptions = {}
   }
 
   orderbook (q, opts = {}) {
