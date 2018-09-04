@@ -17,23 +17,32 @@ class OrderbookContainer extends Component {
     this.client = this.props.client
   }
 
-  updateInterval (pair) {
+  _sub (pair) {
     const { dispatch } = this.props
 
-    if (this.periodicFetch) {
-      clearInterval(this.periodicFetch)
-    }
+    this.client.onOrderBook({ symbol: pair }, (ob) => {
+      dispatch(setOrderbook(ob))
+    })
 
-    this.periodicFetch = setInterval(() => {
-      this.props.client.orderbook({ pair: pair })
-        .then((res) => {
-          const pl = { asks: res.asks, bids: res.bids, error: null }
-          dispatch(setOrderbook(pl))
-        })
-        .catch((err) => {
-          dispatch(setOrderbook({ asks: [], bids: [], error: err }))
-        })
-    }, 1000)
+    this.client.unSubscribeOrderBook(pair)
+    this.client.subscribeOrderBook(pair)
+  }
+
+  componentDidMount () {
+    const { pair } = this.props
+
+    this.client.once('open', () => {
+      this._sub(pair)
+    })
+  }
+
+  subscribe (pair) {
+    const { dispatch } = this.props
+
+    if (!this.client.connected) return
+    if (!pair) return
+
+    this._sub(pair)
   }
 
   componentWillReceiveProps (props) {
@@ -43,11 +52,12 @@ class OrderbookContainer extends Component {
       return false
     }
 
-    this.updateInterval(pair)
+    this.subscribe(pair)
   }
 
   componentWillUnmount () {
-    clearInterval(this.periodicFetch)
+    const { pair } = this.props
+    this.client.unSubscribeOrderBook(pair)
   }
 
   render () {

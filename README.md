@@ -1,5 +1,9 @@
 # Cheesebox
 
+We are migrating to a new API.
+
+For the HTTP only adapters, checkout 86504a81abb459d90d9dc2d126680b6df9d280a5
+
 Cheesebox is a minimalistic UI to build custom exchanges. It's build with React and Redux.
 
 The focus is easy portability and fast setup. This means the Redux side is kept simple, so its easy to extend for your own use cases.

@@ -3,7 +3,7 @@
 'use strict'
 const assert = require('assert')
 
-const MWsHive = require('../src/adapters/mandelbrot-ws-hive.js')
+const MWsHive = require('../src/adapters/mandelbrot-ws-base.js')
 const Wock = require('./ws-testhelper.js')
 
 describe('websockets', () => {
