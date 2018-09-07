@@ -20,7 +20,7 @@ class OrderbookContainer extends Component {
   _sub (pair) {
     const { dispatch } = this.props
 
-    this.client.onOrderBook({ symbol: pair }, (ob) => {
+    this.client.onManagedOrderbookUpdate({ symbol: pair }, (ob) => {
       dispatch(setOrderbook(ob))
     })
 
