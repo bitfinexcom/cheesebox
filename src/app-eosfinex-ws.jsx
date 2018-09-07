@@ -23,7 +23,7 @@ const sbConf = {
     account: user.name
   },
   transform: {
-    orderbook: { keyed: true, decimals: 4 },
+    orderbook: { keyed: true },
     wallet: {}
   }
 }
