@@ -16,35 +16,29 @@ class WalletContainer extends Component {
     this.client = this.props.client
   }
 
-  updateInterval () {
+  _sub () {
     const { dispatch } = this.props
 
-    if (this.periodicFetch) {
-      clearInterval(this.periodicFetch)
-    }
+    this.client.onManagedWalletUpdate({}, (res) => {
+      dispatch(setWallet(res))
+    })
 
-    this.periodicFetch = setInterval(() => {
-      this.client.wallet()
-        .then((res) => {
-          dispatch(setWallet(res))
-        })
-        .catch((err) => {
-          dispatch(setWallet({ error: err }))
-        })
-    }, 1000)
+    this.client.auth()
   }
 
-  componentWillMount () {
-    this.updateInterval()
+  componentDidMount () {
+    this.client.once('open', () => {
+      this._sub()
+    })
   }
 
   componentWillUnmount () {
-    clearInterval(this.periodicFetch)
+    this.client.unSubscribeWallet()
   }
 
   render () {
     const {
-      error,
+      error = null,
       wallet = []
     } = this.props
 
@@ -62,7 +56,7 @@ class WalletInternal extends Component {
   render () {
     const {
       wallet = [],
-      error = false
+      error = null
     } = this.props
 
     if (error) {
@@ -74,10 +68,11 @@ class WalletInternal extends Component {
         <div><strong>Wallet</strong></div>
         {
           wallet.map((el, i) => {
+            const [, currency, amount] = el
             return (
               <div className='wallet__internal__item' key={i}>
-                <div className='wallet__internal__currency'>{el.currency}</div>
-                <div className='wallet__internal__balance'>{el.balance}</div>
+                <div className='wallet__internal__currency'>{currency}</div>
+                <div className='wallet__internal__balance'>{amount}</div>
               </div>
             )
           })

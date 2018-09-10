@@ -97,7 +97,7 @@ function wallet (state = { wallet: [] }, action) {
 
       return {
         ...state,
-        wallet: data
+        wallet: [ ...data ]
       }
     default:
       return state
