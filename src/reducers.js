@@ -48,15 +48,16 @@ function positions (state = { bidsPositions: [], asksPositions: [], errorPositio
   }
 }
 
-function orderbook (state = { asks: [], bids: [], errorOb: null }, action) {
+function orderbook (state = { asks: [], bids: [] }, action) {
   const { type, payload } = action
 
   switch (type) {
     case ORDERBOOK:
+      const { bids, asks } = payload
+
       const data = {
-        bids: payload.bids,
-        asks: payload.asks,
-        errorOb: payload.error
+        bids: [ ...bids ],
+        asks: [ ...asks ]
       }
 
       return {
@@ -96,7 +97,7 @@ function wallet (state = { wallet: [] }, action) {
 
       return {
         ...state,
-        wallet: data
+        wallet: [ ...data ]
       }
     default:
       return state

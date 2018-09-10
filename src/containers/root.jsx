@@ -215,6 +215,7 @@ class App extends Component {
             handleSubmit={this.handleSubmit.bind(this)} />
         </div>
         <div className='row'>
+          <WalletContainer client={this.client} />
         </div>
         <div className='row'>
           <div className='column'>
