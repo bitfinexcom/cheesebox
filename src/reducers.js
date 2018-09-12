@@ -28,15 +28,37 @@ function pairPairs (state = { pairs: [], pair: '' }, action) {
   }
 }
 
-function positions (state = { bidsPositions: [], asksPositions: [], errorPositions: null }, action) {
+function positions (state = { bidsPositions: [], asksPositions: [] }, action) {
   const { type, payload } = action
 
   switch (type) {
     case POSITIONS:
+      const { orders, pair } = payload
+
+      const res = orders.map((el) => {
+        el.belongsToUser = true
+        return el
+      }).reduce((acc, el) => {
+        // filter out cancelled
+        if (el.amount === 0) return acc
+
+        // if pair is passed, filter pairs
+        if (pair && pair !== el.symbol) return acc
+
+        if (el.amount > 0) {
+          acc.bids.push(el)
+          return acc
+        }
+
+        acc.asks.push(el)
+        return acc
+      }, { asks: [], bids: [] })
+
+      const { bids, asks } = res
+
       const data = {
-        bidsPositions: payload.bids,
-        asksPositions: payload.asks,
-        errorPositions: payload.error
+        bidsPositions: [ ...bids ],
+        asksPositions: [ ...asks ]
       }
 
       return {

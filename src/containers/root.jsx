@@ -133,6 +133,12 @@ class App extends Component {
 
     // stub login
     dispatch(login(this.conf.user))
+
+    this.client.on('error', (err) => {
+      console.error(err)
+      console.log(err.msg)
+      console.log(err.info)
+    })
   }
 
   onPairChange (event) {
@@ -213,6 +219,7 @@ class App extends Component {
             onPostOnlyChange={linkState(this, 'postonly')}
             onTypeChange={linkState(this, 'type', 'target.value')}
             handleSubmit={this.handleSubmit.bind(this)} />
+          <PositionsContainer client={this.client} />
         </div>
         <div className='row'>
           <WalletContainer client={this.client} />

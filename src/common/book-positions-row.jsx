@@ -5,7 +5,6 @@ import React, { Component } from 'react'
 const Row = (props) => {
   const {
     data: {
-      id,
       price,
       amount,
       belongsToUser

@@ -17,37 +17,43 @@ class PositionsContainer extends Component {
     this.client = this.props.client
   }
 
-  updateInterval (pair, user) {
-    const { dispatch } = this.props
+  componentDidMount () {
+    const { pair } = this.props
 
-    if (this.periodicFetch) {
-      clearInterval(this.periodicFetch)
-    }
-
-    this.periodicFetch = setInterval(() => {
-      this.client.orders({ pair: pair, user: user })
-        .then((res) => {
-          const pl = { asks: res.asks, bids: res.bids, error: null }
-          dispatch(setPositions(pl))
-        })
-        .catch((err) => {
-          dispatch(setPositions({ asks: [], bids: [], error: err }))
-        })
-    }, 1000)
+    this.client.once('open', () => {
+      this._sub(pair)
+    })
   }
 
   componentWillReceiveProps (props) {
-    const { user, pair } = props
+    const { pair } = props
 
-    if (props.pair === this.props.pair) {
-      return false
+    if (pair !== this.props.pair) {
+      this.subscribe(pair)
     }
-
-    this.updateInterval(pair, user)
   }
 
   componentWillUnmount () {
-    clearInterval(this.periodicFetch)
+    this.client.unSubscribeOrders()
+  }
+
+  subscribe (pair) {
+    if (!this.client.connected) return
+    if (!pair) return
+
+    this._sub(pair)
+  }
+
+  _sub (pair) {
+    const { dispatch } = this.props
+
+    this.client.onManagedOrdersUpdate({}, (orders) => {
+      dispatch(
+        setPositions({ orders, pair })
+      )
+    })
+
+    this.client.auth()
   }
 
   cancelOrder (data) {

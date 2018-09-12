@@ -38,8 +38,6 @@ class OrderbookContainer extends Component {
   }
 
   subscribe (pair) {
-    const { dispatch } = this.props
-
     if (!this.client.connected) return
     if (!pair) return
 
