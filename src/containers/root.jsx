@@ -156,21 +156,14 @@ class App extends Component {
     const amnt = state.type !== 'buy' ? (state.amount * -1) + '' : state.amount
 
     const order = {
-      pair: pair,
+      symbol: pair,
       price: state.price,
       amount: amnt,
       type: state.ordertype,
-      user: this.conf.user,
-      postOnly: 0
+      postOnly: state.postonly
     }
 
     this.client.place(order)
-      .then((res) => {
-        console.log('res', res)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
   }
 
   render () {
