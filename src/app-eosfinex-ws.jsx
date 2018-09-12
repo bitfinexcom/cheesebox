@@ -24,7 +24,8 @@ const sbConf = {
   },
   transform: {
     orderbook: { keyed: true },
-    wallet: {}
+    wallet: {},
+    orders: { keyed: true }
   }
 }
 
@@ -43,7 +44,7 @@ const conf = {
   client: ws
 }
 
-const store = configureStore({ pairPairs: { pairs: conf.pairs, pair: conf.pair }})
+const store = configureStore({ pairPairs: { pairs: conf.pairs, pair: conf.pair } })
 
 ReactDOM.render((
   <Provider store={store}>
