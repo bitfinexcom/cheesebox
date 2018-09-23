@@ -1,5 +1,7 @@
 'use strict'
 
+const version = 'app-eosfinex-ws.jsx'
+
 const express = require('express')
 const app = express()
 const fs = require('fs')
@@ -21,7 +23,7 @@ async.series(tasks, (err) => {
 function jsx (cb) {
   mkdirp.sync(path.join(__dirname, 'build'))
 
-  const src = path.join(__dirname, 'src', 'app-eosfinex-ws.jsx')
+  const src = path.join(__dirname, 'src', version)
   const target = fs.createWriteStream(path.join(__dirname, 'build', 'app.js'))
   browserify([ src ])
     .transform('babelify', {
