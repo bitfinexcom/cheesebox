@@ -2,7 +2,6 @@
 
 const MB = require('mandelbrot').WsBase
 
-const Order = require('./mandelbrot-hive-order-helper.js')
 const Wallet = require('./hive-managed-wallet.js')
 const Orderbook = require('./hive-managed-ob.js')
 
@@ -37,7 +36,17 @@ class HiveAdapter extends MB {
 
   async cancel (data) {}
 
-  async place (order) {}
+  place (order) {
+    order.type = order.type.replace(/_/g, ' ')
+    const on = [
+      0,
+      'on',
+      null,
+      order
+    ]
+
+    this.send(on)
+  }
 }
 
 module.exports = HiveAdapter
