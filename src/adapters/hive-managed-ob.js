@@ -1,22 +1,20 @@
 'use strict'
 
+// P0
+// PRICE, COUNT, AMOUNT
+
 class Orderbook {
   constructor (opts = {}) {
     this.conf = opts
 
     const { keyed } = this.conf
     this.state = keyed ? { asks: [], bids: [] } : []
+
+    this.type = 'P0'
   }
 
   isSnapshot (d) {
-    if (!d[0]) {
-      // empty snap
-      return true
-    }
-
-    if (Array.isArray(d[0])) {
-      return true
-    }
+    return true
   }
 
   parse (d) {
@@ -45,22 +43,11 @@ class Orderbook {
   }
 
   deleteFromKeyed (id, state) {
-    const f = (el) => {
-      return el.id !== id
-    }
-
-    return {
-      asks: state.asks.filter(f),
-      bids: state.bids.filter(f)
-    }
+    throw new Error('not implemented')
   }
 
   deleteFromRaw (id, state) {
-    const filtered = state.filter((el) => {
-      return el[0] !== id
-    })
-
-    return filtered
+    throw new Error('not implemented')
   }
 
   applyDelete (id, state, keyed) {
@@ -77,45 +64,11 @@ class Orderbook {
   }
 
   applyUpdate (update) {
-    const [id, price, amount] = update
-
-    if (price === 0) {
-      // when PRICE = 0 then you have to delete the order
-      return this.deleteEntry(id)
-    }
-
-    const parsed = this.parseUpdate(update)
-    const { keyed } = this.conf
-
-    if (!keyed) {
-      this.state.push(parsed)
-      return
-    }
-
-    if (amount < 0) this.state.asks.push(parsed)
-    if (amount > 0) this.state.bids.push(parsed)
+    throw new Error('not implemented')
   }
 
   parseUpdate (el) {
-    const { decimals, keyed } = this.conf
-    const dt = this.decimalsTransformer
-
-    const [id, price, amount] = el
-    let update = [id, price, amount]
-
-    if (decimals) {
-      update = [id, dt(price, decimals), dt(amount, decimals)]
-    }
-
-    if (keyed) {
-      update = {
-        id: update[0],
-        price: update[1],
-        amount: update[2]
-      }
-    }
-
-    return update
+    throw new Error('not implemented')
   }
 
   parseSnap (snap) {
@@ -129,8 +82,8 @@ class Orderbook {
 
     if (decimals) {
       snap = snap.map((el) => {
-        const [id, price, amount] = el
-        return [id, dt(price, decimals), dt(amount, decimals)]
+        const [price, count, amount] = el
+        return [dt(price, decimals), count, dt(amount, decimals)]
       })
     }
 
@@ -147,10 +100,9 @@ class Orderbook {
     const bids = snap.filter(el => el[2] < 0)
 
     const mp = (el) => {
-      // [id, price, amount]
       const order = {
-        id: el[0],
-        price: el[1],
+        price: el[0],
+        count: el[1],
         amount: el[2]
       }
 

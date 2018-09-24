@@ -12,7 +12,8 @@ const ws = new HiveConnector({
   url: 'ws://localhost:8888',
   user: user,
   managedState: {
-    Wallet: { Component: Wallet }
+    Wallet: { Component: Wallet },
+    Orderbook: { Component: Orderbook, opts: { keyed: true }}
   }
 })
 
