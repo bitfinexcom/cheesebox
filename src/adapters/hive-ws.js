@@ -11,11 +11,11 @@ class HiveAdapter extends MB {
 
     opts.Wallet = Wallet || managedState.Wallet.component
 
-    opts.Orderbook = Orderbook
+    opts.Orderbook = Orderbook || managedState.Wallet.component
     opts.Orders = class Orders {}
 
     opts.transform = {
-      orderbook: { keyed: true },
+      orderbook: managedState.Orderbook.opts,
       wallet: managedState.Wallet.opts,
       orders: { keyed: true }
     }

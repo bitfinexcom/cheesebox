@@ -3,7 +3,10 @@
 'use strict'
 const assert = require('assert')
 
-const MWsHive = require('../src/adapters/mandelbrot-ws-base.js')
+const MWsHive = require('../src/adapters/hive-ws.js')
+const Wallet = require('../src/adapters/hive-managed-wallet.js')
+const Orderbook = require('../src/adapters/hive-managed-ob.js')
+
 const Wock = require('./ws-testhelper.js')
 
 describe('websockets', () => {
@@ -26,7 +29,6 @@ describe('websockets', () => {
         // simulate ob snapshot
         wss.send(ws, [
           '123btcusd',
-          'os',
           [
             [ -16.1, 1, 1 ],
             [ -8.99, 3, 12 ]
@@ -37,7 +39,7 @@ describe('websockets', () => {
       setTimeout(() => {
         wss.send(ws, [
           '123btcusd',
-          [ 1, 1, 1 ]
+          [ [ 1, 1, 1 ] ]
         ])
       }, 100)
     }
@@ -46,7 +48,14 @@ describe('websockets', () => {
       wss.close()
     }
 
-    const conf = { url: 'ws://localhost:8888' }
+    const conf = {
+      url: 'ws://localhost:8888',
+      user: { id: 1 },
+      managedState: {
+        Wallet: { Component: Wallet },
+        Orderbook: { Component: Orderbook, opts: { keyed: false } }
+      }
+    }
     const ws = new MWsHive(conf)
 
     ws.on('open', () => {
@@ -61,7 +70,7 @@ describe('websockets', () => {
     let count = 0
     ws.onOrderBook({ symbol: 'BTCUSD' }, (ob) => {
       if (count === 1) {
-        assert.deepEqual(ob, [ 1, 1, 1 ])
+        assert.deepEqual(ob, [ [ 1, 1, 1 ] ])
         count++
       }
 
