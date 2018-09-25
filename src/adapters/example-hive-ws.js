@@ -3,7 +3,6 @@
 const HiveConnector = require('./hive-ws.js')
 
 const Orderbook = require('./hive-managed-ob.js')
-const Orders = require('./managed-orders.js')
 const Wallet = require('./hive-managed-wallet.js')
 
 const user = { id: 1, name: 'testuser' }
@@ -12,7 +11,8 @@ const ws = new HiveConnector({
   url: 'ws://localhost:8888',
   user: user,
   managedState: {
-    Wallet: { Component: Wallet }
+    Wallet: { component: Wallet },
+    Orderbook: { component: Orderbook, opts: { keyed: true } }
   }
 })
 

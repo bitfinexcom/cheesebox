@@ -17,8 +17,8 @@ const mb = new HiveConnector({
 
   managedState: {
     Wallet: { opts: {} },
-    Orderbook: { opts: { keyed: true }},
-    Orders: { opts: { keyed: true }}
+    Orderbook: { opts: { keyed: true } },
+    Orders: { opts: { keyed: true } }
   }
 })
 

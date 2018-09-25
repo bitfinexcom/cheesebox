@@ -34,8 +34,8 @@ function jsx (cb) {
     .transform('babelify', {
       presets: [
         [ '@babel/preset-env', {
-          "targets": {
-            "browsers": [ "last 2 Chrome versions" ]
+          'targets': {
+            'browsers': [ 'last 2 Chrome versions' ]
           }
         }],
         [ '@babel/preset-react', {} ]
