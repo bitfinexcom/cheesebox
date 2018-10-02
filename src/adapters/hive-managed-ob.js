@@ -110,8 +110,8 @@ class Orderbook {
     }
 
     const ob = {
-      asks: bids.map(mp).sort((a, b) => b.price - a.price),
-      bids: asks.map(mp).sort((a, b) => a.price - b.price)
+      asks: bids.map(mp).sort((a, b) => a.price - b.price),
+      bids: asks.map(mp).sort((a, b) => b.price - a.price)
     }
 
     return ob

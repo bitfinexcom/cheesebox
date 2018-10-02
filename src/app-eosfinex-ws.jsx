@@ -36,10 +36,10 @@ const conf = {
   dev: true,
   user: user,
   exchangeName: 'Cantor Exchange - eosfinex',
-  pair: 'BTC.USD',
+  pair: 'EOS.USD',
   pairs: [
-    'BTC.USD',
-    'ETH.USD'
+    'EOS.USD',
+    'IQX.USD'
   ],
   client: ws
 }

@@ -44,16 +44,23 @@ class OrderbookContainer extends Component {
     this._sub(pair)
   }
 
+  unsubscribe (pair) {
+    this.client.unSubscribeOrderBook(pair)
+    this.client.onManagedOrderbookUpdate({ symbol: pair }, () => {})
+  }
+
   componentWillReceiveProps (props) {
     const { pair } = props
 
     if (pair !== this.props.pair) {
+      this.unsubscribe(this.props.pair)
       this.subscribe(pair)
     }
   }
 
   componentWillUnmount () {
     const { pair } = this.props
+    this.client.onManagedOrderbookUpdate({ symbol: pair }, () => {})
 
     this.client.unSubscribeOrderBook(pair)
   }
