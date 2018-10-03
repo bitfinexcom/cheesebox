@@ -15,6 +15,7 @@ import ErrorBox from '../common/errorbox.jsx'
 import OrdersContainer from '../containers/orders.jsx'
 import OrderbookContainer from '../containers/orderbook.jsx'
 import WalletContainer from '../containers/wallet.jsx'
+import PositionsContainer from '../containers/positions.jsx'
 
 class Clock extends Component {
   constructor (props) {
@@ -215,6 +216,7 @@ class App extends Component {
         </div>
         <div className='row'>
           <WalletContainer client={this.client} />
+          { this.conf.margin ? <PositionsContainer client={this.client} /> : null}
         </div>
         <div className='row'>
           <div className='column'>

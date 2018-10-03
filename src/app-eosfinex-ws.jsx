@@ -41,7 +41,8 @@ const conf = {
     'EOS.USD',
     'IQX.USD'
   ],
-  client: ws
+  client: ws,
+  margin: false
 }
 
 const store = configureStore({ pairPairs: { pairs: conf.pairs, pair: conf.pair } })

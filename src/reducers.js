@@ -127,12 +127,31 @@ function wallet (state = { wallet: [] }, action) {
   }
 }
 
+function positions (state = { positions: [] }, action) {
+  const { type, payload } = action
+
+  const data = payload
+
+
+  switch (type) {
+    case POSITIONS:
+      console.log("data", data)
+      return {
+        ...state,
+        positions: [ ...data ]
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   pairPairs,
   user,
   orders,
   orderbook,
-  wallet
+  wallet,
+  positions
 })
 
 export default rootReducer
