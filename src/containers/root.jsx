@@ -11,11 +11,11 @@ import {
   login
 } from '../actions.js'
 
-import OrderbookRow from '../common/book-positions-row.jsx'
 import ErrorBox from '../common/errorbox.jsx'
-import PositionsContainer from '../containers/positions.jsx'
+import OrdersContainer from '../containers/orders.jsx'
 import OrderbookContainer from '../containers/orderbook.jsx'
 import WalletContainer from '../containers/wallet.jsx'
+import PositionsContainer from '../containers/positions.jsx'
 
 class Clock extends Component {
   constructor (props) {
@@ -212,10 +212,11 @@ class App extends Component {
             onPostOnlyChange={linkState(this, 'postonly')}
             onTypeChange={linkState(this, 'type', 'target.value')}
             handleSubmit={this.handleSubmit.bind(this)} />
-          <PositionsContainer client={this.client} />
+          <OrdersContainer client={this.client} />
         </div>
         <div className='row'>
           <WalletContainer client={this.client} />
+          { this.conf.margin ? <PositionsContainer client={this.client} /> : null}
         </div>
         <div className='row'>
           <div className='column'>

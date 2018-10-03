@@ -5,6 +5,7 @@ const MB = require('mandelbrot').WsBase
 const Wallet = require('./hive-managed-wallet.js')
 const Orderbook = require('./hive-managed-ob.js')
 const Orders = require('./hive-managed-orders.js')
+const Positions = require('./hive-managed-positions.js')
 
 class HiveAdapter extends MB {
   constructor (opts) {
@@ -13,11 +14,13 @@ class HiveAdapter extends MB {
     opts.Wallet = managedState.Wallet.component || Wallet
     opts.Orderbook = managedState.Orderbook.component || Orderbook
     opts.Orders = managedState.Orders.component || Orders
+    opts.Positions = managedState.Positions.component || Positions
 
     opts.transform = {
       orderbook: managedState.Orderbook.opts,
       wallet: managedState.Wallet.opts,
-      orders: managedState.Orders.opts
+      orders: managedState.Orders.opts,
+      positions: managedState.Positions.opts
     }
 
     super(opts)

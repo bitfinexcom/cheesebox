@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import OrderbookRow from '../common/book-positions-row.jsx'
+import OrderbookRow from '../common/book-orders-row.jsx'
 import ErrorBox from '../common/errorbox.jsx'
 
 import {
@@ -128,6 +128,16 @@ class OrderbookSide extends Component {
       data = [],
       side
     } = this.props
+
+    if (!data.length) {
+      return (
+        <div className='orderbook__side'>
+          No orders.
+        </div>
+
+      )
+    }
+
     return (
       <div className='orderbook__side'>
         <div className='orderbook__explaintable rowI'>

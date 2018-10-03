@@ -18,7 +18,8 @@ const mb = new HiveConnector({
   managedState: {
     Wallet: { opts: {} },
     Orderbook: { opts: { keyed: true } },
-    Orders: { opts: { keyed: true } }
+    Orders: { opts: { keyed: true } },
+    Positions: { opts: {} }
   }
 })
 
@@ -31,7 +32,8 @@ const conf = {
     'BTCUSD',
     'ETHUSD'
   ],
-  client: mb
+  client: mb,
+  margin: true
 }
 
 mb.open()

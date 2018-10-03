@@ -2,6 +2,13 @@ body {
   margin-top: 25px;
 }
 
+.positions td {
+  padding: 0.5rem 0.5rem;
+  font-weight: 300;
+  letter-spacing: .01em;
+  line-height: 1.6;
+}
+
 .wallet__internal__item {
   clear: both;
 }
@@ -101,19 +108,15 @@ body {
   display: flex;
 }
 
-.positions__internal {
+.orders__internal {
   width: 70vw
 }
 
-.positions__title {
-
-}
-
-.positions__bids > .rowI {
+.orders__bids > .rowI {
   background: rgba(40, 200, 40, 0.2)
 }
 
-.positions__asks > .rowI {
+.orders__asks > .rowI {
   background: rgba(200, 40, 40, 0.2)
 }
 

@@ -3,12 +3,38 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import OrderbookRow from '../common/book-positions-row.jsx'
 import ErrorBox from '../common/errorbox.jsx'
 
 import {
   setPositions
 } from '../actions.js'
+
+const TablePositions = (props) => {
+  const rows = props.data.map((el, i) => {
+    const [symbol, status, amount, basePrice] = el
+
+    return (
+      <tr key={i}>
+        <td>{symbol}</td>
+        <td>{amount}</td>
+        <td>{basePrice}</td>
+      </tr>
+    )
+  })
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <td>Pair</td>
+          <td>Amount</td>
+          <td>Base Price</td>
+        </tr>
+      </thead>
+      {rows}
+    </table>
+  )
+}
 
 class PositionsContainer extends Component {
   constructor (props) {
@@ -18,116 +44,43 @@ class PositionsContainer extends Component {
   }
 
   componentDidMount () {
-    const { pair } = this.props
-
     this.client.once('open', () => {
-      this._sub(pair)
+      this._sub()
     })
   }
 
-  componentWillReceiveProps (props) {
-    const { pair } = props
-
-    if (pair !== this.props.pair) {
-      this.subscribe(pair)
-    }
-  }
-
   componentWillUnmount () {
-    this.client.unSubscribeOrders()
+    this.client.onManagedPositionsUpdate({}, (positions) => {})
   }
 
-  subscribe (pair) {
-    if (!this.client.connected) return
-    if (!pair) return
-
-    this._sub(pair)
-  }
-
-  _sub (pair) {
+  _sub () {
     const { dispatch } = this.props
 
-    this.client.onManagedOrdersUpdate({}, (orders) => {
+    this.client.onManagedPositionsUpdate({}, (positions) => {
+
       dispatch(
-        setPositions({ orders, pair })
+        setPositions(positions)
       )
     })
 
     this.client.auth()
   }
 
-  cancelOrder (data) {
-    this.client.cancel(data)
-  }
-
   render () {
     const {
-      bidsPositions = [],
-      asksPositions = [],
-      errorPositions = null,
-      pair = ''
+      positions = []
     } = this.props
 
     return (
-      <PositionsInternal
-        pair={pair}
-        bids={bidsPositions}
-        asks={asksPositions}
-        error={errorPositions}
-        cancelcb={(data) => {
-          this.cancelOrder(data)
-        }}
-      />
-    )
-  }
-}
+      <div className='column column-65 column-offset-10 positions'>
+        All Positions
 
-class PositionsInternal extends Component {
-  render () {
-    const {
-      bids = [],
-      asks = [],
-      error = false,
-      cancelcb = () => console.log('cancelcb called for positions'),
-      pair
-    } = this.props
-
-    if (error) {
-      return <ErrorBox error={error.message} />
-    }
-
-    return (
-      <div className='column column-65 column-offset-10 positions__internal'>
-        <div className='positions__title'>
-          Positions for {pair}
-        </div>
-        <div className='orderbook__explaintable rowI'>
-          <div className='row__price'>
-            Price
-          </div>
-          <div className='row__quantity'>
-            Quantity
-          </div>
-          <div className='row__cancelbutton' />
-        </div>
-        <div className='positions__bids'>
-          {
-            bids.map((bidRow, i) => {
-              return <OrderbookRow key={i} data={bidRow} cancelcb={cancelcb} pair={pair} side='bids' />
-            })
-          }
-        </div>
-        <div className='positions__asks'>
-          {
-            asks.map((askRow, i) => {
-              return <OrderbookRow key={i} data={askRow} cancelcb={cancelcb} pair={pair} side='asks' />
-            })
-          }
-        </div>
+        <TablePositions data={positions} />
       </div>
     )
   }
 }
+
 
 function mapStateToProps (state) {
   const {
