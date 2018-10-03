@@ -101,19 +101,15 @@ body {
   display: flex;
 }
 
-.positions__internal {
+.orders__internal {
   width: 70vw
 }
 
-.positions__title {
-
-}
-
-.positions__bids > .rowI {
+.orders__bids > .rowI {
   background: rgba(40, 200, 40, 0.2)
 }
 
-.positions__asks > .rowI {
+.orders__asks > .rowI {
   background: rgba(200, 40, 40, 0.2)
 }
 

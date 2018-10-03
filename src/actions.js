@@ -3,6 +3,7 @@
 export const PAIR_PAIRS = 'PAIR_PAIRS'
 export const LOGIN = 'LOGIN'
 export const POSITIONS = 'POSITIONS'
+export const ORDERS = 'ORDERS'
 export const ORDERBOOK = 'ORDERBOOK'
 export const WALLET = 'WALLET'
 
@@ -23,6 +24,13 @@ export function login (payload) {
 export function setPositions (payload) {
   return {
     type: POSITIONS,
+    payload
+  }
+}
+
+export function setOrders (payload) {
+  return {
+    type: ORDERS,
     payload
   }
 }

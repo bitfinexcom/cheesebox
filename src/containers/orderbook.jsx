@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import OrderbookRow from '../common/book-positions-row.jsx'
+import OrderbookRow from '../common/book-orders-row.jsx'
 import ErrorBox from '../common/errorbox.jsx'
 
 import {
