@@ -29,11 +29,13 @@ class OrdersContainer extends Component {
     const { pair } = props
 
     if (pair !== this.props.pair) {
+      this.client.onManagedOrdersUpdate({ symbol: this.props.pair }, () => {})
       this.subscribe(pair)
     }
   }
 
   componentWillUnmount () {
+    this.client.onManagedOrdersUpdate({ symbol: this.props.pair }, () => {})
     this.client.unSubscribeOrders()
   }
 
