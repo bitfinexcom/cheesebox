@@ -114,11 +114,15 @@ class Orders {
   getKeyedFromArray (el) {
     return {
       id: el[0],
-      clientId: el[2],
+      gid: el[1],
+      cid: el[2],
       symbol: el[3],
+      created: el[4],
+      updated: el[5],
       amount: el[6],
       origAmount: el[7],
       type: el[8],
+      flags: el[12],
       status: el[13],
       price: el[16]
     }
@@ -134,7 +138,6 @@ class Orders {
 
   parseSnap (snap) {
     const { keyed } = this.conf
-
     if (!keyed) return snap
 
     const keyedSnap = snap.map((el) => {
