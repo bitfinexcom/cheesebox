@@ -128,6 +128,16 @@ class OrderbookSide extends Component {
       data = [],
       side
     } = this.props
+
+    if (!data.length) {
+      return (
+        <div className='orderbook__side'>
+          No orders.
+        </div>
+
+      )
+    }
+
     return (
       <div className='orderbook__side'>
         <div className='orderbook__explaintable rowI'>
