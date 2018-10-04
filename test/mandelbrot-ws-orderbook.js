@@ -63,19 +63,19 @@ describe('websockets', () => {
     })
 
     ws.on('close', () => {
-      assert.equal(ws.connected, false)
+      assert.strictEqual(ws.connected, false)
       done()
     })
 
     let count = 0
     ws.onOrderBook({ symbol: 'BTCUSD' }, (ob) => {
       if (count === 1) {
-        assert.deepEqual(ob, [ [ 1, 1, 1 ] ])
+        assert.deepStrictEqual(ob, [ [ 1, 1, 1 ] ])
         count++
       }
 
       if (count === 0) {
-        assert.deepEqual(ob, [ [ -16.1, 1, 1 ], [ -8.99, 3, 12 ] ])
+        assert.deepStrictEqual(ob, [ [ -16.1, 1, 1 ], [ -8.99, 3, 12 ] ])
         count++
       }
 

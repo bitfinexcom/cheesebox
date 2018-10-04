@@ -140,7 +140,6 @@ function positions (state = { positions: [] }, action) {
 
   const data = payload
 
-
   switch (type) {
     case POSITIONS:
       return {
