@@ -67,17 +67,25 @@ class WalletInternal extends Component {
       <div className='wallet__internal column column-25'>
         <div><strong>Wallet</strong></div>
         {
-          wallet
-            .filter((el) => { return el[0] === 'exchange' })
-            .map((el, i) => {
-              const [, currency, amount] = el
-              return (
-                <div className='wallet__internal__item' key={i}>
-                  <div className='wallet__internal__currency'>{currency}</div>
-                  <div className='wallet__internal__balance'>{amount}</div>
-                </div>
-              )
-            })
+          Object.keys(wallet).map((k, i) => {
+            const _wallet = wallet[k]
+            return (
+              <div key={i} className='clearfix'>
+                <div className='wallet__internal__subhead'>{k}</div>
+                {
+                  _wallet.map((el, i) => {
+                    const [, currency, amount] = el
+                    return (
+                      <div className='wallet__internal__item' key={i}>
+                        <div className='wallet__internal__currency'>{currency}</div>
+                        <div className='wallet__internal__balance'>{amount}</div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            )
+          })
         }
       </div>
     )

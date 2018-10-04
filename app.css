@@ -9,6 +9,10 @@ body {
   line-height: 1.6;
 }
 
+.wallet__internal__subhead {
+  text-align: center;
+}
+
 .wallet__internal__item {
   clear: both;
 }

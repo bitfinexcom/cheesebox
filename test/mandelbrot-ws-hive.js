@@ -22,7 +22,7 @@ describe('websockets', () => {
     })
 
     wss.messageHook = (ws, msg) => {
-      assert.equal(msg.event, 'subscribe')
+      assert.strictEqual(msg.event, 'subscribe')
       wss.send(ws, { ok: true })
     }
 
@@ -34,8 +34,10 @@ describe('websockets', () => {
       url: 'ws://localhost:8888',
       user: { id: 1 },
       managedState: {
-        Wallet: { Component: Wallet },
-        Orderbook: { Component: Orderbook, opts: { keyed: true } }
+        Wallet: { component: Wallet },
+        Orderbook: { component: Orderbook, opts: { keyed: true } },
+        Orders: {},
+        Positions: {}
       }
     }
 
@@ -52,12 +54,12 @@ describe('websockets', () => {
     })
 
     ws.on('close', () => {
-      assert.equal(ws.connected, false)
+      assert.strictEqual(ws.connected, false)
       done()
     })
 
     ws.on('message', (msg) => {
-      assert.deepEqual(msg, { ok: true })
+      assert.deepStrictEqual(msg, { ok: true })
       ws.close()
     })
 
