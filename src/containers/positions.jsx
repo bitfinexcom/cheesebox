@@ -31,7 +31,9 @@ const TablePositions = (props) => {
           <td>Base Price</td>
         </tr>
       </thead>
-      {rows}
+      <tbody>
+        {rows}
+      </tbody>
     </table>
   )
 }

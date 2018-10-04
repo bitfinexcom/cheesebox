@@ -117,10 +117,18 @@ function wallet (state = { wallet: [] }, action) {
 
   switch (type) {
     case WALLET:
+      const _data = data.reduce((acc, el) => {
+        const [type] = el
+        if (!acc[type]) {
+          acc[type] = []
+        }
+        acc[type].push(el)
+        return acc
+      }, {})
 
       return {
         ...state,
-        wallet: [ ...data ]
+        wallet: { ..._data }
       }
     default:
       return state
@@ -135,7 +143,6 @@ function positions (state = { positions: [] }, action) {
 
   switch (type) {
     case POSITIONS:
-      console.log("data", data)
       return {
         ...state,
         positions: [ ...data ]
