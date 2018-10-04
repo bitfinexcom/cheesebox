@@ -3,8 +3,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import ErrorBox from '../common/errorbox.jsx'
-
 import {
   setPositions
 } from '../actions.js'

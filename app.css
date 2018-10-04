@@ -29,7 +29,11 @@ body {
   float: right;
 }
 
-.submit__postonly {
+.submit_options label {
+  float: left;
+}
+
+.submit__postonly, .submit__margin {
   margin-right: 5px;
 }
 
