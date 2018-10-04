@@ -64,7 +64,10 @@ const SubmitOrder = (props) => {
     onAmountChange,
     onPriceChange,
     onPostOnlyChange,
-    onTypeChange
+    onTypeChange,
+    marginEnabled,
+    margin,
+    onMarginChange
   } = props
 
   return (
@@ -99,10 +102,18 @@ const SubmitOrder = (props) => {
           Price:
           <input type='text' value={price} onInput={onPriceChange} />
         </label>
-        <label>
-          <input className='submit__postonly' type='checkbox' value={postonly} onInput={onPostOnlyChange} />
-          Post Only
-        </label>
+        <div>
+          <label>
+            <input className='submit__postonly' type='checkbox' value={postonly} onInput={onPostOnlyChange} />
+            Post Only
+          </label>
+          { marginEnabled
+            ? <label>
+              <input className='submit__margin' type='checkbox' value={margin} onInput={onMarginChange} />
+              Margin Order
+            </label> : null
+          }
+        </div>
         <button className='button-black submit__button'>Submit</button>
       </form>
     </div>
@@ -121,7 +132,9 @@ class App extends Component {
       ordertype: 'EXCHANGE_LIMIT',
       type: '',
       amount: '',
-      price: ''
+      price: '',
+      margin: false,
+      postonly: false
     }
   }
 
@@ -155,11 +168,15 @@ class App extends Component {
 
     const amnt = state.type !== 'buy' ? (state.amount * -1) + '' : state.amount
 
+    const type = state.margin
+      ? state.ordertype.replace(/EXCHANGE_/g, '')
+      : state.ordertype
+
     const order = {
       symbol: pair,
       price: state.price,
       amount: amnt,
-      type: state.ordertype,
+      type: type,
       postOnly: state.postonly
     }
 
@@ -178,7 +195,8 @@ class App extends Component {
       type,
       amount,
       price,
-      postonly
+      postonly,
+      margin
     } = this.state
 
     const { exchangeName } = this.conf
@@ -207,9 +225,12 @@ class App extends Component {
             amount={amount}
             price={price}
             postonly={postonly}
+            margin={margin}
+            marginEnabled={this.conf.margin}
             onAmountChange={linkState(this, 'amount')}
             onPriceChange={linkState(this, 'price')}
             onPostOnlyChange={linkState(this, 'postonly')}
+            onMarginChange={linkState(this, 'margin')}
             onTypeChange={linkState(this, 'type', 'target.value')}
             handleSubmit={this.handleSubmit.bind(this)} />
           <OrdersContainer client={this.client} />
