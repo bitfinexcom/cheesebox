@@ -53,7 +53,9 @@ describe('websockets', () => {
       user: { id: 1 },
       managedState: {
         Wallet: { Component: Wallet },
-        Orderbook: { Component: Orderbook, opts: { keyed: false } }
+        Orderbook: { Component: Orderbook, opts: { keyed: false } },
+        Orders: {},
+        Positions: {}
       }
     }
     const ws = new MWsHive(conf)

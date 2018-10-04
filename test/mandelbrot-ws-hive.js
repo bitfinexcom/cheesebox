@@ -34,8 +34,10 @@ describe('websockets', () => {
       url: 'ws://localhost:8888',
       user: { id: 1 },
       managedState: {
-        Wallet: { Component: Wallet },
-        Orderbook: { Component: Orderbook, opts: { keyed: true } }
+        Wallet: { component: Wallet },
+        Orderbook: { component: Orderbook, opts: { keyed: true } },
+        Orders: {},
+        Positions: {}
       }
     }
 
