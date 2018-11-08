@@ -10,7 +10,9 @@ import configureStore from './configureStore.js'
 import Eos from 'eosjs'
 import Sunbeam from 'sunbeam'
 
-const user = { id: null, name: 'testuser1431' }
+import getUser from './common/login.js'
+
+const user = { id: null, name: getUser('testuser1431') }
 
 const sbConf = {
   url: 'ws://',
