@@ -9,7 +9,9 @@ import configureStore from './configureStore.js'
 
 import HiveConnector from './adapters/hive-ws.js'
 
-const user = { id: 1, name: 'testuser' }
+import getUser from './common/login.js'
+
+const user = { id: getUser(1), name: 'testuser' }
 
 const mb = new HiveConnector({
   url: 'ws://localhost:8888',
