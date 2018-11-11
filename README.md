@@ -18,12 +18,11 @@ If you created an own exchange / connector, feel free to submit a [Pull Request]
 
 ```
 # eosfinex
-
-nodemon -e js,jsx dev-eosfinex.js -w src
+npm run start-eosfinex
 
 # hive
 
-nodemon -e js,jsx dev-hive.js -w src
+npm run start-hive
 ```
 
 
