@@ -96,20 +96,20 @@ const SubmitOrder = (props) => {
         </div>
         <label>
           Amount:
-          <input type='text' value={amount} onInput={onAmountChange} />
+          <input type='text' value={amount} onChange={onAmountChange} />
         </label>
         <label>
           Price:
-          <input type='text' value={price} onInput={onPriceChange} />
+          <input type='text' value={price} onChange={onPriceChange} />
         </label>
         <div>
           <label>
-            <input className='submit__postonly' type='checkbox' value={postonly} onInput={onPostOnlyChange} />
+            <input className='submit__postonly' type='checkbox' value={postonly} onChange={onPostOnlyChange} />
             Post Only
           </label>
           { marginEnabled
             ? <label>
-              <input className='submit__margin' type='checkbox' value={margin} onInput={onMarginChange} />
+              <input className='submit__margin' type='checkbox' value={margin} onChange={onMarginChange} />
               Margin Order
             </label> : null
           }
