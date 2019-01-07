@@ -1,13 +1,13 @@
 'use strict'
 
-const MB = require('mandelbrot').WsBase
+const MB = require('mandelbrot')
 
-const Wallet = require('./hive-managed-wallet.js')
+const Wallet = MB.BaseWallet
 const Orderbook = require('./hive-managed-ob.js')
 const Orders = require('./hive-managed-orders.js')
 const Positions = require('./hive-managed-positions.js')
 
-class HiveAdapter extends MB {
+class HiveAdapter extends MB.WsBase {
   constructor (opts) {
     const { managedState } = opts
 
