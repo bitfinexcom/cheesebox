@@ -3,7 +3,7 @@
 const MB = require('mandelbrot')
 
 const Wallet = MB.BaseWallet
-const Orderbook = require('./hive-managed-ob.js')
+const Orderbook = MB.P0Orderbook
 const Orders = require('./hive-managed-orders.js')
 const Positions = require('./hive-managed-positions.js')
 
