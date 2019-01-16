@@ -1,6 +1,6 @@
 'use strict'
 
-class Wallet {
+class Positions {
   constructor (conf = {}) {
     this.state = []
 
@@ -17,39 +17,51 @@ class Wallet {
     return this.parseUpdate(copy)
   }
 
-  update (u, type) {
+  update (u) {
     const copy = JSON.parse(JSON.stringify(u))
 
-    if (this.isSnapshot(copy, type)) {
-      this.setSnapshot(copy)
+    if (this.isSnapshot(copy)) {
+      this.setSnapshot(copy[2])
       return
     }
 
     this.applyUpdate(copy)
   }
 
-  isSnapshot (u, type) {
+  isSnapshot (u) {
+    const [, type] = u
     if (type === 'ps') return true
 
     return false
   }
 
-  parseSnap (snap) {
-    return snap
-  }
-
-  parseUpdate (update) {
-    return update
-  }
-
   setSnapshot (snap) {
-    const res = this.parseSnap(snap)
-
-    this.state = res
+    this.state = snap
   }
 
-  applyUpdate (update) {
-    throw new Error('not implemented')
+  applyUpdate (msg) {
+    const [, type, position] = msg
+    const [pair] = position
+
+    if (type === 'pc') {
+      this.state = this.state.filter((el) => {
+        return pair !== el[0]
+      })
+    }
+
+    if (type === 'pn') {
+      this.state.push(position)
+      return
+    }
+
+    // pu
+    this.state = this.state.map((el) => {
+      if (el[0] === pair) {
+        return position
+      }
+
+      return el
+    })
   }
 
   getState () {
@@ -57,4 +69,4 @@ class Wallet {
   }
 }
 
-module.exports = Wallet
+module.exports = Positions

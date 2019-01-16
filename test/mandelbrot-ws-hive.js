@@ -4,9 +4,6 @@
 const assert = require('assert')
 
 const MWsHive = require('../src/adapters/hive-ws.js')
-const Wallet = require('../src/adapters/hive-managed-wallet.js')
-const Orderbook = require('../src/adapters/hive-managed-ob.js')
-
 const Wock = require('./ws-testhelper.js')
 
 describe('websockets', () => {
@@ -34,8 +31,8 @@ describe('websockets', () => {
       url: 'ws://localhost:8888',
       user: { id: 1 },
       managedState: {
-        Wallet: { component: Wallet },
-        Orderbook: { component: Orderbook, opts: { keyed: true } },
+        Wallet: {},
+        Orderbook: { opts: { keyed: true } },
         Orders: {},
         Positions: {}
       }
